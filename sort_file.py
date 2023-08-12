@@ -6,7 +6,7 @@ load_dotenv()
 
 def is_source_code_content(content):
     # Use regular expressions to identify patterns
-    pattern = r'\b(html|javascript|python)\b'
+    pattern = r'\b(html|javascript|import|python)\b'
     if re.search(pattern, content):
         return True
     return False
