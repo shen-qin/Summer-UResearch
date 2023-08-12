@@ -34,6 +34,7 @@ async def get_files_to_upload(queue, path):
       if not entry.name.startswith('.') and entry.is_file():
         await queue.put(entry.path)
         n_files += 1
+  print(f'n_files:{n_files}')
   return n_files
 
 
@@ -44,7 +45,8 @@ async def upload_hashes(queue, apikey):
   async with vt.Client(apikey) as client:
     while not queue.empty():
       file_path = await queue.get()
-      with open(file_path, encoding='utf-8') as f:
+      print(f'Processing file: {file_path}')  # Print the file path
+      with open(file_path, 'rb') as f:
         analysis = await client.scan_file_async(file=f)
         print(f'File {file_path} uploaded.')
         queue.task_done()
@@ -57,9 +59,8 @@ async def process_analysis_results(apikey, analysis, file_path):
   global completed_count
   async with vt.Client(apikey) as client:
     completed_analysis = await client.wait_for_analysis_completion(analysis)
-    analysis_result = await completed_analysis
-    print(f'{file_path}: {analysis_result.stats}')
-    print(f'analysis_id: {analysis_result.id}')
+    print(f'{file_path}: {completed_analysis.stats}')
+    print(f'analysis_id: {completed_analysis.id}')
     
     # Save analysis_result.id to a txt file
     with open('analysis_ids.txt', 'a') as f:
