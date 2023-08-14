@@ -64,7 +64,7 @@ async def process_analysis_results(apikey, analysis, file_path):
     
     # Save analysis_result.id to a txt file
     with open('analysis_ids.txt', 'a') as f:
-            f.write(f'{file_path}: {analysis_result.id}\n')
+            f.write(f'{file_path}: {completed_analysis.id}\n')
         
     completed_count += 1  # Increment the completed count
 
