@@ -72,7 +72,6 @@ async def print_completed_count_periodically():
     global completed_count
     while True:
         print(f'{completed_count} files completed.')
-        completed_count = 0  # Reset the completed count
         await asyncio.sleep(300)  # Wait for 5 minutes
 
 
