@@ -13,10 +13,12 @@ async def fetch_analysis(analysis_id, apikey):
     return response
 
 # Read the analysis_ids from the .txt file
-with open(os.getenv("SAMPLE_ANALYSIS_ID"), 'r') as file:
-    analysis_ids = [line.strip() for line in file]
+with open("folder_6/analysis_ids.txt", 'r') as file:
+    lines = file.readlines()
 
-def save_as_jsonl(analysis_id, result, filename="results.jsonl"):
+analysis_ids = [line.split(":")[1].strip() for line in lines]
+
+def save_as_jsonl(analysis_id, result, filename="folder_6/results6.jsonl"):
     with open(filename, 'a') as file:
         json.dump({"analysis_id": analysis_id, "result": result}, file)
         file.write("\n")
